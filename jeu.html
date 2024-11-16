@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeu de gestion de ferme</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f1f5f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #28a745;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 32px;
+            border-bottom: 5px solid #218838;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            padding: 25px;
+        }
+
+        .section {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            transition: transform 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-10px);
+        }
+
+        h2 {
+            color: #28a745;
+            font-size: 24px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .farm-actions button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 18px;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .farm-actions button:hover {
+            background-color: #218838;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .balance {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #007bff;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .balance .currency {
+            font-size: 24px;
+            font-weight: normal;
+        }
+
+        .count-display {
+            margin-top: 10px;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .price {
+            font-size: 16px;
+            color: #f39c12;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .balance {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                font-size: 18px;
+                padding: 10px 15px;
+            }
+        }
+
+        .disabled {
+            background-color: #6c757d !important;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Gestion de Ferme - Jeu</h1>
+    </header>
+
+    <div class="container">
+        <!-- Cultures Section -->
+        <div class="section">
+            <h2>Cultures 🌾🍅🥔</h2>
+            <div class="farm-actions">
+                <button onclick="harvest('wheat')"><i class="fas fa-seedling"></i> Récolter Blé 🌾</button>
+                <button onclick="harvest('tomato')"><i class="fas fa-seedling"></i> Récolter Tomates 🍅</button>
+                <button onclick="harvest('potato')"><i class="fas fa-seedling"></i> Récolter Pommes de Terre 🥔</button>
+            </div>
+            <div class="count-display">
+                Blé: <span id="wheat-count">0</span><br>
+                Tomates: <span id="tomato-count">0</span><br>
+                Pommes de Terre: <span id="potato-count">0</span>
+            </div>
+            <div class="price">
+                Prix de vente: Blé 5€, Tomates 6€, Pommes de Terre 4€
+            </div>
+        </div>
+
+        <!-- Employés Section -->
+        <div class="section">
+            <h2>Employés 👨‍🌾👩‍🌾</h2>
+            <p>Les employés récoltent automatiquement vos cultures toutes les 5 secondes !</p>
+            <div class="farm-actions">
+                <button onclick="buyEmployee()"><i class="fas fa-user-plus"></i> Embaucher Employé</button>
+                <div class="price">Prix : 50€</div>
+            </div>
+            <div class="count-display">
+                Nombre d'employés: <span id="employee-count">0</span>
+            </div>
+        </div>
+
+        <!-- Vendeurs Section -->
+        <div class="section">
+            <h2>Vendeurs 💰</h2>
+            <p>Les vendeurs vendent automatiquement vos récoltes toutes les 5 secondes lorsque vous avez des produits disponibles !</p>
+            <div class="farm-actions">
+                <button onclick="buySeller()"><i class="fas fa-user-plus"></i> Embaucher Vendeur</button>
+                <div class="price">Prix : 50€</div>
+            </div>
+            <div class="count-display">
+                Nombre de vendeurs: <span id="seller-count">0</span>
+            </div>
+        </div>
+    </div>
+    <!-- Ajout du bouton pour accéder à la page des missions -->
+<div class="farm-actions">
+    <button onclick="window.location.href='missions.html'"><i class="fas fa-trophy"></i> Missions</button>
+</div>
+
+
+    <!-- Nouveau bouton pour vendre toutes les récoltes -->
+    <div class="section">
+        <h2>Vendre toutes les récoltes</h2>
+        <div class="farm-actions">
+            <button id="sell-all-btn" onclick="sellAllCrops()" class="disabled" disabled><i class="fas fa-dollar-sign"></i> Vendre Toutes les Récoltes</button>
+        </div>
+    </div>
+
+    <div class="balance">
+        Solde: <span id="balance">100</span><span class="currency">€</span>
+    </div>
+
+    <script>
+        let balance = 100;
+        let employees = 0;
+        let sellers = 0;
+
+        let wheat = 0;
+        let tomato = 0;
+        let potato = 0;
+
+        const balanceDisplay = document.getElementById('balance');
+        const sellerCountDisplay = document.getElementById('seller-count');
+        const employeeCountDisplay = document.getElementById('employee-count');
+        const wheatCountDisplay = document.getElementById('wheat-count');
+        const tomatoCountDisplay = document.getElementById('tomato-count');
+        const potatoCountDisplay = document.getElementById('potato-count');
+        const sellAllButton = document.getElementById('sell-all-btn');
+
+        function updateBalance() {
+            balanceDisplay.innerText = balance;
+        }
+
+        function updateSellerCount() {
+            sellerCountDisplay.innerText = sellers;
+        }
+
+        function updateEmployeeCount() {
+            employeeCountDisplay.innerText = employees;
+        }
+
+        function updateCultures() {
+            wheatCountDisplay.innerText = wheat;
+            tomatoCountDisplay.innerText = tomato;
+            potatoCountDisplay.innerText = potato;
+            checkSellButtonStatus();
+        }
+
+        function checkSellButtonStatus() {
+            if (wheat > 0 || tomato > 0 || potato > 0) {
+                sellAllButton.disabled = false;
+                sellAllButton.classList.remove('disabled');
+            } else {
+                sellAllButton.disabled = true;
+                sellAllButton.classList.add('disabled');
+            }
+        }
+
+        function harvest(crop) {
+            if (crop === 'wheat') {
+                wheat++;
+            } else if (crop === 'tomato') {
+                tomato++;
+            } else if (crop === 'potato') {
+                potato++;
+            }
+            updateCultures();
+        }
+
+        function buyEmployee() {
+            if (balance >= 50) {
+                balance -= 50;
+                employees++;
+                updateBalance();
+                updateEmployeeCount();
+                automateHarvesting();
+            }
+        }
+
+        function buySeller() {
+            if (balance >= 50) {
+                balance -= 50;
+                sellers++;
+                updateBalance();
+                updateSellerCount();
+                automateSelling();
+            }
+        }
+
+        function automateHarvesting() {
+            setInterval(function() {
+                if (employees > 0) {
+                    harvest('wheat');
+                    harvest('tomato');
+                    harvest('potato');
+                }
+            }, 5000);
+        }
+
+        function automateSelling() {
+            setInterval(function() {
+                if (sellers > 0) {
+                    sellAllCrops();
+                }
+            }, 5000);
+        }
+
+        function sellAllCrops() {
+            if (wheat > 0 || tomato > 0 || potato > 0) {
+                let totalSale = 0;
+                totalSale += wheat * 5;
+                totalSale += tomato * 6;
+                totalSale += potato * 4;
+
+                balance += totalSale;
+                wheat = 0;
+                tomato = 0;
+                potato = 0;
+                updateBalance();
+                updateCultures();
+            }
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil - Jeu de gestion de ferme</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #f4f7fa;
+            color: #333;
+            text-align: center;
+            padding: 50px;
+        }
+
+        h1 {
+            color: #28a745;
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 20px;
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        .button-start {
+            padding: 15px 30px;
+            font-size: 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .button-start:hover {
+            background-color: #218838;
+        }
+
+        .img-container {
+            margin-top: 40px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .intro {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+        }
+
+        .intro h2 {
+            color: #28a745;
+            margin-bottom: 20px;
+        }
+
+        .intro p {
+            font-size: 18px;
+            color: #555;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .button-start {
+                font-size: 18px;
+                padding: 12px 25px;
+            }
+
+            .intro p {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Bienvenue dans le jeu de gestion de ferme!</h1>
+    <p>Relevez le défi de gérer votre propre ferme, cultiver des produits, embaucher des employés et des vendeurs pour vous aider, et plus encore!</p>
+    
+    <a href="jeu.html">
+        <button class="button-start">Commencer le jeu</button>
+    </a>
+
+    <div class="intro">
+        <h2>Comment ça marche?</h2>
+        <p>Dans ce jeu, vous devrez cultiver des produits, embaucher des employés et des vendeurs pour automatiser certaines tâches, et vendre vos récoltes pour augmenter votre solde.</p>
+        <p>Votre objectif est de faire grandir votre ferme en optimisant vos ressources et en prenant de bonnes décisions!</p>
+    </div>
+
+    <div class="img-container">
+        <img src="farm-image.jpg" alt="Ferme" />
+    </div>
+
+</body>
+</html>
