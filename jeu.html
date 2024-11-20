@@ -20,12 +20,6 @@
             transition: background-color 0.3s, color 0.3s;
         }
 
-        /* Mode Sombre */
-        body.dark-mode {
-            background-color: #121212;
-            color: #eaeaea;
-        }
-
         header {
             background-color: #28a745;
             color: white;
@@ -33,10 +27,6 @@
             text-align: center;
             font-size: 32px;
             border-bottom: 5px solid #218838;
-        }
-
-        body.dark-mode header {
-            background-color: #1c6e3f;
         }
 
         .container {
@@ -54,11 +44,6 @@
             transition: transform 0.3s ease;
         }
 
-        body.dark-mode .section {
-            background-color: #2a2a2a;
-            box-shadow: 0 4px 16px rgba(255, 255, 255, 0.1);
-        }
-
         .section:hover {
             transform: translateY(-10px);
         }
@@ -70,14 +55,10 @@
             text-align: center;
         }
 
-        body.dark-mode h2 {
-            color: #78c25c;
-        }
-
         .farm-actions {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 15px; /* Espacement entre les boutons */
         }
 
         .farm-actions button {
@@ -95,18 +76,10 @@
             gap: 10px;
         }
 
-        body.dark-mode .farm-actions button {
-            background-color: #5a8b59;
-        }
-
         .farm-actions button:hover {
             background-color: #218838;
             transform: translateY(-5px);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        body.dark-mode .farm-actions button:hover {
-            background-color: #416e3b;
         }
 
         .farm-actions button:disabled {
@@ -120,10 +93,6 @@
             color: #333;
         }
 
-        body.dark-mode .count-display {
-            color: #eaeaea;
-        }
-
         .price {
             font-size: 16px;
             color: #f39c12;
@@ -131,19 +100,11 @@
             margin-top: 10px;
         }
 
-        body.dark-mode .price {
-            color: #ffbc3a;
-        }
-
         .timer {
             font-size: 16px;
             color: #ff0000;
             font-weight: bold;
             margin-top: 10px;
-        }
-
-        body.dark-mode .timer {
-            color: #ff6f6f;
         }
 
         /* Solde */
@@ -165,31 +126,9 @@
             white-space: nowrap;
         }
 
-        body.dark-mode .balance {
-            background-color: #1d5e8c;
-        }
-
         .balance .currency {
             font-size: 20px;
             font-weight: normal;
-        }
-
-        .toggle-btn {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background-color: #f39c12;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 30px;
-            font-size: 18px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .toggle-btn:hover {
-            background-color: #e67e22;
         }
 
         @media (max-width: 768px) {
@@ -203,6 +142,47 @@
                 bottom: 20px;
                 top: auto;
             }
+        }
+
+        /* Mode Sombre */
+        body.dark-mode {
+            background-color: #333;
+            color: #f1f5f9;
+        }
+
+        body.dark-mode header {
+            background-color: #1c7430;
+        }
+
+        body.dark-mode .section {
+            background-color: #444;
+            color: #f1f5f9;
+        }
+
+        body.dark-mode .farm-actions button {
+            background-color: #1c7430;
+        }
+
+        body.dark-mode .farm-actions button:hover {
+            background-color: #145d24;
+        }
+
+        body.dark-mode .balance {
+            background-color: #0069d9;
+        }
+
+        body.dark-mode h2 {
+            color: #f1f5f9;
+        }
+
+        body.dark-mode .farm-actions button {
+            color: white;
+        }
+
+        body.dark-mode .count-display,
+        body.dark-mode .price,
+        body.dark-mode .timer {
+            color: #f9f1f1;
         }
     </style>
 </head>
@@ -270,7 +250,8 @@
         </div>
     </div>
 
-    <button class="toggle-btn" onclick="toggleDarkMode()">Activer Mode Sombre</button>
+    <!-- Bouton Mode Sombre -->
+    <button onclick="toggleDarkMode()" id="dark-mode-toggle" style="position: fixed; top: 20px; left: 20px; padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 50px; cursor: pointer;">🌙</button>
 
     <script>
         let balance = 100;
@@ -283,6 +264,11 @@
 
         let sellerInterval;
         let sellCooldown = 30; // secondes
+
+        // Vérifier et appliquer le mode sombre à partir du localStorage
+        if (localStorage.getItem("darkMode") === "enabled") {
+            document.body.classList.add("dark-mode");
+        }
 
         function updateBalance() {
             document.getElementById('balance').innerText = balance;
@@ -355,15 +341,18 @@
             }, 1000);
         }
 
+        // Fonction pour basculer entre le mode sombre et clair
         function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode');
-            const toggleButton = document.querySelector('.toggle-btn');
-            if (document.body.classList.contains('dark-mode')) {
-                toggleButton.innerText = "Désactiver Mode Sombre";
+            const body = document.body;
+            body.classList.toggle("dark-mode");
+
+            if (body.classList.contains("dark-mode")) {
+                localStorage.setItem("darkMode", "enabled");
             } else {
-                toggleButton.innerText = "Activer Mode Sombre";
+                localStorage.setItem("darkMode", "disabled");
             }
         }
     </script>
 </body>
 </html>
+
