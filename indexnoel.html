@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil - L'Empire Agricole</title>
+    <style>
+        /* Style global */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom, #1e5631, #4CAF50); /* Dégradé vert comme un sapin */
+            color: #fff;
+            text-align: center;
+            padding: 50px;
+            margin: 0;
+            position: relative;
+            overflow-x: hidden;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            color: #FFD700; /* Doré pour un effet festif */
+            font-size: 42px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px #8B4513; /* Ombre brun-doré */
+        }
+
+        p {
+            font-size: 20px;
+            color: #F0E68C; /* Jaune pâle pour rappeler les lumières de Noël */
+            margin-bottom: 30px;
+        }
+
+        .button-start {
+            padding: 15px 30px;
+            font-size: 20px;
+            background-color: #e74c3c; /* Rouge pour un effet Noël */
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .button-start:hover {
+            background-color: #c0392b;
+            transform: scale(1.1);
+        }
+
+        .img-container {
+            display: flex; /* Utilisation de flexbox pour afficher les images côte à côte */
+            justify-content: center; /* Centrer les images */
+            gap: 20px; /* Espacement entre les images */
+            margin-top: 40px;
+            align-items: center; /* Aligner verticalement les images et le timer */
+        }
+
+        img {
+            width: 30%; /* Chaque image prendra 30% de la largeur */
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .countdown-container {
+            display: flex;
+            flex-direction: column; /* Afficher la phrase et le timer en colonne */
+            align-items: center;
+        }
+
+        .countdown-message {
+            font-size: 24px;
+            color: #FFD700;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .countdown {
+            font-size: 30px;
+            font-weight: bold;
+            color: #FFD700;
+            margin: 0 20px;
+            padding: 15px 30px;
+            background-color: #e74c3c;
+            border-radius: 10px;
+            display: inline-block;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .intro {
+            background: #e74c3c; /* Fond rouge pour un effet Noël */
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            margin-top: 30px;
+            color: #fff; /* Texte en blanc pour contraster */
+        }
+
+        .intro h2 {
+            color: #FFD700; /* Doré pour un effet festif */
+            margin-bottom: 20px;
+        }
+
+        .intro p {
+            font-size: 18px;
+            color: #fff; /* Texte blanc */
+        }
+
+        /* Flocons de neige */
+        .snowflake {
+            position: absolute;
+            top: -50px;
+            color: white;
+            font-size: 18px;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.9); /* Glow blanc autour */
+            animation: fall 10s linear infinite;
+            z-index: 1; /* Les flocons passent derrière les autres éléments */
+            pointer-events: none; /* Les flocons ne bloquent pas les clics */
+        }
+
+        /* Animation de chute */
+        @keyframes fall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0.8;
+            }
+        }
+
+        /* Différents styles de flocons */
+        .snowflake:nth-child(odd) {
+            animation-duration: 15s; /* Temps plus long pour les flocons lents */
+            animation-delay: 0s;
+            font-size: 20px; /* Taille plus grande pour certains flocons */
+        }
+
+        .snowflake:nth-child(even) {
+            animation-duration: 12s; /* Chute plus rapide */
+            animation-delay: 3s;
+            font-size: 28px; /* Flocons plus visibles */
+        }
+
+        .snowflake:nth-child(3n) {
+            animation-duration: 18s;
+            animation-delay: 1s;
+            font-size: 34px;
+            text-shadow: 0 0 12px rgba(255, 255, 255, 0.9); /* Glow plus intense */
+        }
+
+        /* Décorations */
+        body::before {
+            content: url('https://img.icons8.com/color/96/christmas-tree.png'); /* Sapin de Noël */
+            position: absolute;
+            bottom: 20px;
+            left: 10px;
+            z-index: 10;
+        }
+
+        body::after {
+            content: url('https://img.icons8.com/color/96/christmas-gift.png'); /* Cadeau */
+            position: absolute;
+            bottom: 20px;
+            right: 10px;
+            z-index: 10;
+        }
+
+        /* Conteneur principal pour gérer la hauteur */
+        .main-content {
+            min-height: 100vh; /* Assure que le contenu occupe tout l'espace visible */
+            padding-bottom: 100px; /* Ajoute de l'espace en bas pour le contenu */
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .button-start {
+                font-size: 18px;
+                padding: 12px 25px;
+            }
+
+            .intro p {
+                font-size: 16px;
+            }
+
+            img {
+                width: 90%; /* Agrandir encore plus sur les petits écrans */
+            }
+
+            .img-container {
+                flex-direction: column; /* Passer en colonne sur les petits écrans */
+                gap: 10px; /* Espacement réduit */
+            }
+
+            img {
+                width: 80%; /* Réduire la taille de l'image sur mobile */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Flocons de neige -->
+    <div class="snowflake" style="left: 10%;">❄</div>
+    <div class="snowflake" style="left: 20%;">❅</div>
+    <div class="snowflake" style="left: 30%;">❆</div>
+    <div class="snowflake" style="left: 40%;">❄</div>
+    <div class="snowflake" style="left: 50%;">❅</div>
+    <div class="snowflake" style="left: 60%;">❆</div>
+    <div class="snowflake" style="left: 70%;">❄</div>
+    <div class="snowflake" style="left: 80%;">❅</div>
+    <div class="snowflake" style="left: 90%;">❆</div>
+
+    <div class="main-content">
+        <h1>L'Empire Agricole !</h1>
+        <p>Relevez le défi de gérer votre propre ferme, cultiver des produits, embaucher des employés et des vendeurs pour vous aider, et plus encore!</p>
+        
+        <a href="jeu.html">
+            <button class="button-start">🎅 Commencer le jeu</button>
+        </a>
+
+        <div class="intro">
+            <h2>Comment ça marche?</h2>
+            <p>Dans ce jeu, vous devrez cultiver des produits, embaucher des employés et des vendeurs pour automatiser certaines tâches, et vendre vos récoltes pour augmenter votre solde.</p>
+            <p>Votre objectif est de faire grandir votre ferme en optimisant vos ressources et en prenant de bonnes décisions!</p>
+        </div>
+
+        <!-- Conteneur des images avec timer -->
+        <div class="img-container">
+            <img src="sapin.20..png" alt="sapin" />
+            
+            <!-- Conteneur du timer -->
+            <div class="countdown-container">
+                <!-- Message au-dessus du timer -->
+                <div class="countdown-message">Noël arrive à grands pas !</div>
+
+                <!-- Timer -->
+                <div id="countdown" class="countdown"></div>
+            </div>
+
+            <img src="noel-removebg-preview.png" alt="Ferme" />
+        </div>
+    </div>
+
+    <script>
+        // Calcul du temps restant jusqu'à Noël (25 décembre 2024 à minuit)
+        const targetDate = new Date("December 25, 2024 00:00:00").getTime();
+
+        // Mettre à jour le compteur toutes les secondes
+        const countdownInterval = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            // Calculer les jours, heures, minutes et secondes restants
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Afficher le résultat dans le div avec l'id "countdown"
+            document.getElementById("countdown").innerHTML = `${days} jours, ${hours} heures, ${minutes} minutes, ${seconds} secondes`;
+
+            // Si la date de Noël est atteinte, arrêter le compteur
+            if (distance <= 0) {
+                clearInterval(countdownInterval);
+                document.getElementById("countdown").innerHTML = "Joyeux Noël!";
+            }
+        }, 1000);
+    </script>
+
+</body>
+</html>
