@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>L'Empire Agricole</title>
+    <title>L'Empire Agricole 🎄</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * {
@@ -18,22 +18,68 @@
             color: #333;
             line-height: 1.6;
             transition: background-color 0.3s, color 0.3s;
+            background-image: url('https://www.transparenttextures.com/patterns/snowflakes.png');
+            background-size: cover;
+            overflow: hidden;
         }
 
         header {
-            background-color: #28a745;
+            background-color: #c0392b; /* Rouge Noël */
             color: white;
             padding: 20px;
             text-align: center;
             font-size: 32px;
-            border-bottom: 5px solid #218838;
+            border-bottom: 5px solid #e74c3c;
+            position: relative;
         }
 
+        header h1 {
+            font-size: 40px;
+        }
+
+        /* Flocons de neige animés */
+        @keyframes snowflakes {
+            0% { top: -10%; }
+            100% { top: 100%; }
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -10%;
+            font-size: 30px;
+            color: #2ecc71; /* Vert de Noël */
+            opacity: 0.8;
+            animation: snowflakes 12s linear infinite;
+        }
+
+        .snowflake:nth-child(odd) {
+            animation-duration: 15s;
+            font-size: 35px;
+        }
+
+        .snowflake:nth-child(even) {
+            animation-duration: 18s;
+            font-size: 40px;
+        }
+
+        .snowflake:nth-child(3n) {
+            animation-duration: 20s;
+            font-size: 45px;
+        }
+
+        .snowflake:nth-child(4n) {
+            animation-duration: 22s;
+            font-size: 50px;
+        }
+
+        /* Conteneur des sections */
         .container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 25px;
             padding: 25px;
+            position: relative;
+            z-index: 10;
         }
 
         .section {
@@ -49,7 +95,7 @@
         }
 
         h2 {
-            color: #28a745;
+            color: #c0392b; /* Rouge Noël */
             font-size: 24px;
             margin-bottom: 15px;
             text-align: center;
@@ -58,11 +104,11 @@
         .farm-actions {
             display: flex;
             flex-direction: column;
-            gap: 15px; /* Espacement entre les boutons */
+            gap: 15px;
         }
 
         .farm-actions button {
-            background-color: #28a745;
+            background-color: #27ae60; /* Vert festif */
             color: white;
             border: none;
             padding: 15px 25px;
@@ -77,13 +123,13 @@
         }
 
         .farm-actions button:hover {
-            background-color: #218838;
+            background-color: #2ecc71;
             transform: translateY(-5px);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
         .farm-actions button:disabled {
-            background-color: #6c757d;
+            background-color: #95a5a6;
             cursor: not-allowed;
         }
 
@@ -187,18 +233,31 @@
     </style>
 </head>
 <body>
+    <!-- Flocons de neige animés -->
+    <div class="snowflake" style="left: 10%; animation-delay: 0s;">❄️</div>
+    <div class="snowflake" style="left: 20%; animation-delay: 2s;">❄️</div>
+    <div class="snowflake" style="left: 30%; animation-delay: 4s;">❄️</div>
+    <div class="snowflake" style="left: 50%; animation-delay: 6s;">❄️</div>
+    <div class="snowflake" style="left: 70%; animation-delay: 8s;">❄️</div>
+    <div class="snowflake" style="left: 80%; animation-delay: 10s;">❄️</div>
+    <div class="snowflake" style="left: 90%; animation-delay: 12s;">❄️</div>
+    <div class="snowflake" style="left: 60%; animation-delay: 14s;">❄️</div>
+    <div class="snowflake" style="left: 40%; animation-delay: 16s;">❄️</div>
+    <div class="snowflake" style="left: 25%; animation-delay: 18s;">❄️</div>
+
     <header>
-        <h1>L'Empire Agricole</h1>
+        <h1>L'Empire Agricole 🎄</h1>
+        <p>Noël arrive à grands pas ! 🎅✨</p>
     </header>
 
     <div class="balance">
-        Solde : <span id="balance">100</span><span class="currency">€</span>
+        Solde : <span id="balance">100</span><span class="currency">€</span> 🎁
     </div>
 
     <div class="container">
         <!-- Cultures Section -->
         <div class="section">
-            <h2>Cultures 🌾🍅🥔</h2>
+            <h2>Cultures 🌾🍅🥔 🎄</h2>
             <div class="farm-actions">
                 <button onclick="harvest('wheat')"><i class="fas fa-seedling"></i> Récolter Blé 🌾</button>
                 <button onclick="harvest('tomato')"><i class="fas fa-seedling"></i> Récolter Tomates 🍅</button>
@@ -207,19 +266,16 @@
             <div class="count-display">
                 Blé : <span id="wheat-count">0</span><br>
                 Tomates : <span id="tomato-count">0</span><br>
-                Pommes de Terre : <span id="potato-count">0</span>
-            </div>
-            <div class="price">
-                Prix de vente : Blé 5€, Tomates 6€, Pommes de Terre 4€
+                Pommes de terre : <span id="potato-count">0</span>
             </div>
         </div>
 
         <!-- Employés Section -->
         <div class="section">
-            <h2>Employés 👨‍🌾👩‍🌾</h2>
-            <p>Les employés récoltent automatiquement vos cultures toutes les 5 secondes !</p>
+            <h2>Employés 💼 🎅</h2>
+            <p>Les employés récoltent automatiquement vos cultures toutes 5 secondes !</p>
             <div class="farm-actions">
-                <button onclick="buyEmployee()"><i class="fas fa-user-plus"></i> Embaucher Employé</button>
+                <button onclick="buyEmployee()"><i class="fas fa-user-plus"></i> Embaucher Employé 🎁</button>
                 <div class="price">Prix : 50€</div>
             </div>
             <div class="count-display">
@@ -229,10 +285,10 @@
 
         <!-- Vendeurs Section -->
         <div class="section">
-            <h2>Vendeurs 💰</h2>
+            <h2>Vendeurs 💰 🎄</h2>
             <p>Les vendeurs vendent automatiquement vos récoltes toutes les 30 secondes. Limité à 1 seul vendeur.</p>
             <div class="farm-actions">
-                <button id="buy-seller-btn" onclick="buySeller()"><i class="fas fa-user-plus"></i> Embaucher Vendeur</button>
+                <button id="buy-seller-btn" onclick="buySeller()"><i class="fas fa-user-plus"></i> Embaucher Vendeur 🎅</button>
                 <div class="price">Prix : 50€</div>
             </div>
             <div class="count-display">
@@ -243,9 +299,9 @@
 
         <!-- Bouton Vendre Toutes les Récoltes -->
         <div class="section">
-            <h2>Vendre Toutes les Récoltes</h2>
+            <h2>Vendre Toutes les Récoltes 🎁</h2>
             <div class="farm-actions">
-                <button id="sell-all-btn" onclick="sellAllCrops()" disabled><i class="fas fa-dollar-sign"></i> Vendre Toutes les Récoltes</button>
+                <button id="sell-all-btn" onclick="sellAllCrops()" disabled><i class="fas fa-dollar-sign"></i> Vendre Toutes les Récoltes 🎄</button>
             </div>
         </div>
     </div>
@@ -355,4 +411,3 @@
     </script>
 </body>
 </html>
-
